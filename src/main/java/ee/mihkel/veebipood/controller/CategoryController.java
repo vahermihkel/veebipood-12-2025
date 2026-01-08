@@ -11,7 +11,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@CrossOrigin(origins = "http://localhost:5173") // turvaelement --> lubab sellise serveri ligi
+@CrossOrigin(origins = "*") // turvaelement --> lubab sellise serveri ligi
 // alati lubatakse ligi Postman ja Brauser, sest nad ei ole serveris.
 public class CategoryController {
 
