@@ -27,10 +27,11 @@ public class VeebipoodApplication {
 //12. E 29.12 - pagination, ostukorv
 //13. E 05.01 - Pakiautomaadid. RestTemplate + makse. @Autowired.
 //14. N 08.01 - makse lõpetamine + front-end hosting ehk Firebase
-//15. T 13.01 - auth
+//15. T 13.01 - makse kontroll
 //16. N 15.01 - auth
-//17. K 21.01 - cache, hosting, front-end testid
+//17. N 22.01 - cache, front-end testid
 // ----> kokku leppida mingid päevad kus saame koos vaadata lõpuprojekti
-//18. K 11.02 --> lõpuprojekti esitlemine
+//18. N 05.02? --> 17.30-19.00 lõpuprojekti esitlemine
+//18. N 12.02? --> 16.00-17.30
 
 // full-stack arendus: proovitöö. kodutöö edasiarenduse. või täiesti ise mõelda mingi projekti valmis

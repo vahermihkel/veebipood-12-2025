@@ -4,10 +4,7 @@ import ee.mihkel.veebipood.entity.Order;
 import ee.mihkel.veebipood.entity.PaymentState;
 import ee.mihkel.veebipood.entity.Person;
 import ee.mihkel.veebipood.entity.Product;
-import ee.mihkel.veebipood.model.EveryPayBody;
-import ee.mihkel.veebipood.model.EveryPayResponse;
-import ee.mihkel.veebipood.model.ParcelMachine;
-import ee.mihkel.veebipood.model.PaymentLink;
+import ee.mihkel.veebipood.model.*;
 import ee.mihkel.veebipood.repository.OrderRepository;
 import ee.mihkel.veebipood.repository.PersonRepository;
 import ee.mihkel.veebipood.repository.ProductRepository;
@@ -61,6 +58,8 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    // ?order_reference=eqdsds10&payment_reference=a455530fca9c27837c8627c2db17012dce9d4a014e3ff2c5c80325aa723c5e71
+    // ?order_reference=eqdsds11&payment_reference=7393d3f226cc7f75e7ff98df87bd66cbf5cf734cadb32fb1abbbded57e596b64
     public PaymentLink makePayment(Long id, double total) {
         String url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
 
@@ -94,4 +93,30 @@ public class OrderService {
         ParcelMachine[] body = restTemplate.exchange(url, HttpMethod.GET, null, ParcelMachine[].class).getBody();
         return Arrays.stream(body).filter(e -> e.getA0_NAME().equals("EE")).toList();
     }
+
+    public OrderPaid checkPayment(String orderReference, String paymentReference) {
+        String url = "https://igw-demo.every-pay.com/api/v4/payments/"+paymentReference+"?api_username=e36eb40f5ec87fa2&detailed=false";
+        HttpHeaders headers = new HttpHeaders();
+            headers.setBasicAuth("e36eb40f5ec87fa2", "7b91a3b9e1b74524c2e9fc282f8ac8cd");
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<EveryPayBody> entity = new HttpEntity<>(null, headers);
+
+        EveryPayStatus response = restTemplate.exchange(url, HttpMethod.GET, entity, EveryPayStatus.class).getBody();
+        if (response == null) {
+            throw new RuntimeException("Failed to check payment");
+        }
+//        System.out.println(response.getOrder_reference());
+//        System.out.println(orderReference);
+        if (!response.getOrder_reference().equals(orderReference)) {
+            throw new RuntimeException("Order reference does not match");
+        }
+        Order order =  orderRepository.findById(Long.parseLong(response.getOrder_reference().replace("eqdsds",""))).orElseThrow();
+        order.setPaymentState(PaymentState.valueOf(response.getPayment_state().toUpperCase()));
+        OrderPaid orderPaid = new OrderPaid();
+        orderPaid.setPaid(response.getPayment_state().equals("settled"));
+        return orderPaid;
+    }
 }
+
+

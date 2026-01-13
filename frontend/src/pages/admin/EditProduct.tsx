@@ -37,7 +37,7 @@ function EditProduct() {
   // JavaSriptis suunata: const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/products/" + product_id)
+    fetch(import.meta.env.VITE_HOSTING_URL + "/products/" + product_id)
       .then(res => res.json())
       .then(json => {
         setProduct(json);
@@ -56,7 +56,7 @@ function EditProduct() {
       toast.error("Hind peab olema suurem kui null!");
       return;
     }
-     fetch("http://localhost:8080/products", {
+     fetch(import.meta.env.VITE_HOSTING_URL + "/products", {
       method: "PUT",
       body: JSON.stringify(product),
       headers: {

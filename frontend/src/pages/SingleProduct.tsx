@@ -10,7 +10,7 @@ function SingleProduct() {
   const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    fetch("http://localhost:8080/products/" + product_id)
+    fetch(import.meta.env.VITE_HOSTING_URL + "/products/" + product_id)
       .then(res => res.json())
       .then(json => {
         setProduct(json);

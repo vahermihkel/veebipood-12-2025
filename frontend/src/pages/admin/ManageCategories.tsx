@@ -7,13 +7,13 @@ function ManageCategories() {
   const [category, setCategory] = useState<Category>({name: ""});
 
   useEffect(() => {
-    fetch("http://localhost:8080/categories")
+    fetch(import.meta.env.VITE_HOSTING_URL + "/categories")
       .then(res => res.json())
       .then(json => setCategories(json)) // kui teen täpselt ühe rea, pole loogelisi sulge vaja
   }, []);
 
   function deleteCategory(categoryId: number) {
-    fetch("http://localhost:8080/categories/" + categoryId, {method: "DELETE"})
+    fetch(import.meta.env.VITE_HOSTING_URL + "/categories/" + categoryId, {method: "DELETE"})
       .then(res => res.json())
       .then(json => { // kui teen 2 või rohkem rida, on loogelised sulud kohustuslikud
         if (json.message && json.timestamp && json.status) { // minu mudel kuidas ma vigu väljastan
@@ -25,7 +25,7 @@ function ManageCategories() {
   }
 
   function addCategory() {
-    fetch("http://localhost:8080/categories", {
+    fetch(import.meta.env.VITE_HOSTING_URL + "/categories", {
       method: "POST",
       body: JSON.stringify(category),
       headers: {

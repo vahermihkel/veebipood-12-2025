@@ -1,28 +1,16 @@
 package ee.mihkel.veebipood.controller;
 
 import ee.mihkel.veebipood.entity.Order;
-import ee.mihkel.veebipood.entity.Person;
 import ee.mihkel.veebipood.entity.Product;
-import ee.mihkel.veebipood.model.EveryPayBody;
+import ee.mihkel.veebipood.model.OrderPaid;
 import ee.mihkel.veebipood.model.ParcelMachine;
 import ee.mihkel.veebipood.model.PaymentLink;
-import ee.mihkel.veebipood.model.Supplier1Product;
 import ee.mihkel.veebipood.repository.OrderRepository;
-import ee.mihkel.veebipood.repository.PersonRepository;
 import ee.mihkel.veebipood.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -53,6 +41,11 @@ public class OrderController {
     @GetMapping("parcelmachines")
     public List<ParcelMachine> getParcelMachines(){
         return orderService.getParcelMachines();
+    }
+
+    @GetMapping("check-payment")
+    public OrderPaid checkPayment(@RequestParam String orderReference, String paymentReference) {
+        return orderService.checkPayment(orderReference, paymentReference);
     }
 
     // localhost:8080/payment?total=10&order_reference=1234

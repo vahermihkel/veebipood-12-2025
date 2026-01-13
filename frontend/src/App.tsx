@@ -9,6 +9,7 @@ import ManageCategories from './pages/admin/ManageCategories';
 import ManageProducts from './pages/admin/ManageProducts';
 import SingleProduct from './pages/SingleProduct';
 import EditProduct from './pages/admin/EditProduct';
+import CheckPayment from './pages/CheckPayment';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/admin/muuda-toode/:product_id" element={ <EditProduct/> } />
 
         <Route path="/toode/:product_id" element={ <SingleProduct /> } />
+        <Route path="/makse" element={ <CheckPayment /> } />
         
         <Route path="/*" element={ <NotFound /> } />
       </Routes>

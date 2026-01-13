@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { ParcelMachine } from "../models/ParcelMachine";
 
-function ParcelMachines(props) {
+interface ParcelMachineInterface {
+  setSelectedPM: (arg: string) => void;
+}
+
+function ParcelMachines(props: ParcelMachineInterface) {
   const [parcelmachines, setParcelMachines] = useState<ParcelMachine[]>([]);
 
   // uef
   useEffect(() => {
-    fetch("http://localhost:8080/parcelmachines")
+    fetch(import.meta.env.VITE_HOSTING_URL + "/parcelmachines")
       .then(res => res.json())
       .then(json => setParcelMachines(json))
   }, []);

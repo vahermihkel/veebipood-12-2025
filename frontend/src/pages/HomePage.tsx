@@ -18,7 +18,7 @@ function HomePage() {
 
   // onLoad funktsioon -> läheb 1x käima
   useEffect(() => {
-    fetch(`http://localhost:8080/products?page=${page}&size=${size}&sort=${sort}&categoryId=${activeCategory}`) // kuhu läheb päring (API endpoint)
+    fetch(import.meta.env.VITE_HOSTING_URL + `/products?page=${page}&size=${size}&sort=${sort}&categoryId=${activeCategory}`) // kuhu läheb päring (API endpoint)
       .then(res => res.json())    // kogu tagastus: headers, statuscode jne. sisu json-kujule
       .then(json => {
         setProducts(json.content);
@@ -28,7 +28,7 @@ function HomePage() {
   }, [page, size, sort, activeCategory]);
 
   useEffect(() => {
-     fetch("http://localhost:8080/categories") 
+     fetch(import.meta.env.VITE_HOSTING_URL + "/categories") 
       .then(res => res.json())    
       .then(json => setCategories(json))      
   }, []);

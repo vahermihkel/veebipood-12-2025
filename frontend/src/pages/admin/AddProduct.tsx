@@ -10,13 +10,13 @@ function AddProduct() {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-     fetch("http://localhost:8080/categories") 
+     fetch(import.meta.env.VITE_HOSTING_URL + "/categories") 
       .then(res => res.json())    
       .then(json => setCategories(json))   
   }, []);
 
   function addProduct() {
-    fetch("http://localhost:8080/products", {
+    fetch(import.meta.env.VITE_HOSTING_URL + "/products", {
       method: "POST",
       body: JSON.stringify(product),
       headers: {

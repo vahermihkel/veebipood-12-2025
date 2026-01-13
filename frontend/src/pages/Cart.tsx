@@ -28,7 +28,7 @@ function Cart() {
 
   // api endpointi kaudu tellimuse sisestamine
   function order() {
-    fetch(`http://localhost:8080/orders?pmName=${selectedPM}&personId=1`, {
+    fetch(import.meta.env.VITE_HOSTING_URL + `/orders?pmName=${selectedPM}&personId=1`, {
       method: "POST",
       body: JSON.stringify(cart),
       headers: {
