@@ -9,6 +9,7 @@ import ee.mihkel.veebipood.repository.OrderRepository;
 import ee.mihkel.veebipood.repository.PersonRepository;
 import ee.mihkel.veebipood.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -37,6 +38,12 @@ public class OrderService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Value("${everypay.url}")
+    String baseUrl;
+
+    @Value("${everypay.customerUrl}")
+    String customerUrl;
+
     private double calculateCartSum(List<Product> products) {
         double sum = 0;
         for (Product product : products) {
@@ -61,7 +68,7 @@ public class OrderService {
     // ?order_reference=eqdsds10&payment_reference=a455530fca9c27837c8627c2db17012dce9d4a014e3ff2c5c80325aa723c5e71
     // ?order_reference=eqdsds11&payment_reference=7393d3f226cc7f75e7ff98df87bd66cbf5cf734cadb32fb1abbbded57e596b64
     public PaymentLink makePayment(Long id, double total) {
-        String url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
+        String url = baseUrl + "/payments/oneoff";
 
         EveryPayBody body = new EveryPayBody();
         body.setAccount_name("EUR3D1");
@@ -69,7 +76,7 @@ public class OrderService {
         body.setTimestamp(ZonedDateTime.now().toString());
         body.setAmount(total);
         body.setOrder_reference("eqdsds" + id);
-        body.setCustomer_url("https://err.ee");
+        body.setCustomer_url(customerUrl);
         body.setApi_username("e36eb40f5ec87fa2");
 
         HttpHeaders headers = new HttpHeaders();
@@ -95,7 +102,7 @@ public class OrderService {
     }
 
     public OrderPaid checkPayment(String orderReference, String paymentReference) {
-        String url = "https://igw-demo.every-pay.com/api/v4/payments/"+paymentReference+"?api_username=e36eb40f5ec87fa2&detailed=false";
+        String url = baseUrl + "/payments/"+paymentReference+"?api_username=e36eb40f5ec87fa2&detailed=false";
         HttpHeaders headers = new HttpHeaders();
             headers.setBasicAuth("e36eb40f5ec87fa2", "7b91a3b9e1b74524c2e9fc282f8ac8cd");
         headers.setContentType(MediaType.APPLICATION_JSON);
