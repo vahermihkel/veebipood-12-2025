@@ -8,12 +8,13 @@ import ee.mihkel.veebipood.model.PaymentLink;
 import ee.mihkel.veebipood.repository.OrderRepository;
 import ee.mihkel.veebipood.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class OrderController {
 
     @Autowired
@@ -28,9 +29,16 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
+    @GetMapping("my-orders")
+    public List<Order> getMyOrders(){
+        Long personId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        return orderRepository.findByPerson_Id(personId);
+    }
+
     @PostMapping("orders")
-    public PaymentLink createOrder(@RequestParam Long personId, @RequestParam String pmName, @RequestBody List<Product> products){
-       Order order = orderService.createOrder(personId, pmName, products);
+    public PaymentLink createOrder(@RequestParam String pmName, @RequestBody List<Product> products){
+        Long personId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        Order order = orderService.createOrder(personId, pmName, products);
        // miks on vaja enne maksmist order salvestada?
         // 1. maksmisel on meil vaja Orderi ID-d
         // 2. kui juhtub tehniline viga (raha läheb maha, aga meie rakenduses ei salvestu),
@@ -54,3 +62,12 @@ public class OrderController {
 //
 //    }
 }
+
+// localhost:8080/parcelmachines GET
+// 1. SecurityConfig, kontroll, kas ta on .permitAll()
+// 2. JwtFilter -> doFilterInternal funktsioon
+// JwtFiltri funktsioonis otsustatakse, kas lastakse ligi või mitte
+// kui on Headers: Authentication kaasas, siis läheb if-itama ja tokenit kontrollima
+// kui ei ole kaasas, siis hüppab if-ist üle ja laseb sisse
+
+// SimpleGrantedAuthority("ADMIN") seest tuleb .hasAuthority("ADMIN")

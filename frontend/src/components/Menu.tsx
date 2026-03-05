@@ -17,9 +17,10 @@ function Menu() {
             <Nav.Link as={Link} to="/admin/halda-kategooriaid">Halda kategooriaid</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link as={Link} to="/minu-tellimused">Minu tellimused</Nav.Link>
-            <Nav.Link as={Link} to="/profiil">Profiil</Nav.Link>
-            <Nav.Link as={Link} to="/logi-sisse">Logi sisse</Nav.Link>                      
+            <Nav.Link as={Link} to="/my-orders">Minu tellimused</Nav.Link>
+            <Nav.Link as={Link} to="/profile">Profiil</Nav.Link>
+            <Nav.Link as={Link} to="/login">Logi sisse</Nav.Link>  
+            <Nav.Link as={Link} to="/signup">Registreeru</Nav.Link>                      
           </Nav>
         </Navbar.Collapse>
       </Container>

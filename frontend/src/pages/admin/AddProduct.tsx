@@ -20,7 +20,8 @@ function AddProduct() {
       method: "POST",
       body: JSON.stringify(product),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        // "Authorization": "Bearer 123"
       }
     }).then(res => res.json())
     .then(() => toast.success("Edukalt toode lisatud"))

@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class SupplierController {
 
     @Autowired

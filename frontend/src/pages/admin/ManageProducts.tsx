@@ -7,14 +7,21 @@ function ManageProducts() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-      fetch(import.meta.env.VITE_HOSTING_URL + "/admin-products") // kuhu läheb päring (API endpoint)
+      fetch(import.meta.env.VITE_HOSTING_URL + "/admin-products", {
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("token")
+        }
+      }) // kuhu läheb päring (API endpoint)
         .then(res => res.json())    // kogu tagastus: headers, statuscode jne. sisu json-kujule
         .then(json => setProducts(json))      // body - setin  
     }, []);
 
   function deleteProduct(productId: number) {
     fetch(import.meta.env.VITE_HOSTING_URL + "/products/" + productId, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("token")
+      }
     }) 
         .then(res => res.json())  
         .then(json => setProducts(json))   

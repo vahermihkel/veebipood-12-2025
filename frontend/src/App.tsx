@@ -10,6 +10,10 @@ import ManageProducts from './pages/admin/ManageProducts';
 import SingleProduct from './pages/SingleProduct';
 import EditProduct from './pages/admin/EditProduct';
 import CheckPayment from './pages/CheckPayment';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import MyOrders from './pages/auth/MyOrders';
+import Profile from './pages/auth/Profile';
 
 function App() {
 
@@ -28,6 +32,11 @@ function App() {
 
         <Route path="/toode/:product_id" element={ <SingleProduct /> } />
         <Route path="/makse" element={ <CheckPayment /> } />
+
+        <Route path="/login" element={ <Login /> } />
+        <Route path="/signup" element={ <Signup /> } />
+        <Route path="/my-orders" element={ <MyOrders /> } />
+        <Route path="/profile" element={ <Profile /> } />
         
         <Route path="/*" element={ <NotFound /> } />
       </Routes>

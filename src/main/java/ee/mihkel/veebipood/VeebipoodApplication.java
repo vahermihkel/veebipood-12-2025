@@ -29,9 +29,10 @@ public class VeebipoodApplication {
 //14. N 08.01 - makse lõpetamine + front-end hosting ehk Firebase
 //15. T 13.01 - makse kontroll
 //16. N 15.01 - auth
-//17. N 22.01 - cache, front-end testid
+//17. T 20.01 - auth, cache
 // ----> kokku leppida mingid päevad kus saame koos vaadata lõpuprojekti
-//18. N 05.02? --> 17.30-19.00 lõpuprojekti esitlemine
-//18. N 12.02? --> 16.00-17.30
+//17a) N 22.01: UI/UX   Figma
+//17b) K 04.02: AI teemal
+//18. N 12.02? --> 15.30-17.00
 
 // full-stack arendus: proovitöö. kodutöö edasiarenduse. või täiesti ise mõelda mingi projekti valmis

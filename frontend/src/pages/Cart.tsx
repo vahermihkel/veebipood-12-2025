@@ -28,11 +28,12 @@ function Cart() {
 
   // api endpointi kaudu tellimuse sisestamine
   function order() {
-    fetch(import.meta.env.VITE_HOSTING_URL + `/orders?pmName=${selectedPM}&personId=1`, {
+    fetch(import.meta.env.VITE_HOSTING_URL + `/orders?pmName=${selectedPM}`, {
       method: "POST",
       body: JSON.stringify(cart),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + sessionStorage.getItem("token")
       }
     }).then(res => res.json())
     .then(json => window.location.href = json.link);

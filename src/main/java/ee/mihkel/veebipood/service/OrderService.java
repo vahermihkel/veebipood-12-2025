@@ -122,6 +122,7 @@ public class OrderService {
         order.setPaymentState(PaymentState.valueOf(response.getPayment_state().toUpperCase()));
         OrderPaid orderPaid = new OrderPaid();
         orderPaid.setPaid(response.getPayment_state().equals("settled"));
+        orderRepository.save(order);
         return orderPaid;
     }
 }
